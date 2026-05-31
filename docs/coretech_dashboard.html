@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Core Tech Dashboard</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <style>
+    :root {
+      --bg: #0f1417;
+      --panel: #182126;
+      --panel-2: #202b31;
+      --line: #32454d;
+      --text: #e9eef1;
+      --muted: #9fb0b8;
+      --cyan: #45d3c9;
+      --yellow: #d7c65b;
+      --green: #a6e22e;
+      --red: #e06c75;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+    }
+    header {
+      padding: 22px 28px;
+      border-bottom: 1px solid var(--line);
+      background: #151d21;
+    }
+    h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: 0; }
+    .subtitle { color: var(--muted); line-height: 1.6; max-width: 1100px; }
+    main { padding: 22px 28px 48px; max-width: 1440px; margin: 0 auto; }
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    button {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      color: var(--text);
+      border-radius: 6px;
+      padding: 9px 13px;
+      cursor: pointer;
+      font: inherit;
+    }
+    button.active { border-color: var(--cyan); color: var(--cyan); background: #122629; }
+    .layout { display: grid; grid-template-columns: minmax(280px, 420px) 1fr; gap: 16px; align-items: start; }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 12px; }
+    .card {
+      background: var(--panel-2);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .card-head { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+    .icon {
+      width: 48px; height: 48px; image-rendering: pixelated;
+      border: 1px solid var(--line); border-radius: 6px; background: #0d1214; padding: 5px;
+    }
+    .name { font-weight: 700; }
+    .id { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .kv { display: grid; grid-template-columns: 76px 1fr; gap: 6px 10px; font-size: 13px; line-height: 1.45; }
+    .kv span:nth-child(odd) { color: var(--muted); }
+    .badge { display: inline-block; border: 1px solid var(--line); border-radius: 999px; padding: 2px 7px; color: var(--cyan); font-size: 12px; }
+    .warn { color: var(--yellow); }
+    .rad { color: var(--green); }
+    .chart { height: 360px; }
+    .network { height: 520px; }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; text-align: left; vertical-align: top; font-size: 14px; }
+    th { background: #223038; }
+    a { color: var(--cyan); text-decoration: none; }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  <script>
+    const { useEffect, useMemo, useRef, useState } = React;
+
+    const minerals = [
+      { id: 'tin', name: '锡', yMin: -16, yMax: 96, vein: 9, count: 12, tool: '铁镐+', trait: '低熔点、焊料、青铜体系', use: '焊料、青铜、早期机器外壳', icon: '../src/main/resources/assets/techmod/textures/block/tin_ore.png' },
+      { id: 'aluminum', name: '铝', yMin: 32, yMax: 128, vein: 8, count: 10, tool: '铁镐+', trait: '轻质、导热、结构材料', use: '轻型框架、散热片、外壳', icon: '../src/main/resources/assets/techmod/textures/block/aluminum_ore.png' },
+      { id: 'lead', name: '铅', yMin: -48, yMax: 32, vein: 6, count: 7, tool: '铁镐+', trait: '高密度、屏蔽辐射、重金属', use: '电池芯、辐射屏蔽、重型外壳', icon: '../src/main/resources/assets/techmod/textures/block/lead_ore.png' },
+      { id: 'silver', name: '银', yMin: -64, yMax: 16, vein: 5, count: 5, tool: '铁镐+', trait: '高导电性、精密接点', use: '高级电路、高级线缆、传感器', icon: '../src/main/resources/assets/techmod/textures/block/silver_ore.png' },
+      { id: 'uranium', name: '铀', yMin: -64, yMax: -16, vein: 4, count: 2, tool: '铁镐+', trait: '放射性、高能量密度', use: '反应堆燃料链；持有有辐射风险', radiation: true, icon: '../src/main/resources/assets/techmod/textures/block/uranium_ore.png' }
+    ];
+
+    const parts = [
+      ['铁板', '2x2 铁锭 -> 2 铁板', '机械齿轮、核心工作台', '机器外壳、压缩机'],
+      ['铜线', '3 铜锭 -> 6 铜线', '基础电路、电池芯、核心工作台', '线缆、电机、发电机'],
+      ['机械齿轮', '铁板 + 铁锭', '核心工作台', '粉碎机、电炉、传动结构'],
+      ['硅晶圆', '2x2 下界石英 -> 2 硅晶圆', '基础电路', '芯片、电路等级升级'],
+      ['基础电路', '铜线 + 红石 + 硅晶圆', '机器控制件', '发电机、电炉、粉碎机'],
+      ['电池芯', '铅锭 + 铜线 + 红石', '早期储能部件', '电池盒、储能单元']
+    ];
+
+    const machines = [
+      ['燃煤发电机', '燃料转 FE', '铁板、铜线、基础电路、齿轮', '正面炉口、顶部排气、侧面散热片'],
+      ['矿石粉碎机', '矿物增产', '齿轮、铁板、基础电路', '正面粉碎口、侧面传动轮'],
+      ['电力熔炉', '消耗 FE 烧炼', '铁板、铜线、电池芯、基础电路', '正面加热窗、顶部线圈'],
+      ['储能单元', '存储 FE', '电池芯、铅锭、铜线', '电量条、输入输出端口']
+    ];
+
+    function EChart({ option, className }) {
+      const ref = useRef(null);
+      useEffect(() => {
+        const chart = echarts.init(ref.current, null, { renderer: 'canvas' });
+        chart.setOption(option);
+        const resize = () => chart.resize();
+        window.addEventListener('resize', resize);
+        return () => { window.removeEventListener('resize', resize); chart.dispose(); };
+      }, [option]);
+      return React.createElement('div', { ref, className });
+    }
+
+    function MineralCards() {
+      return React.createElement('div', { className: 'grid' }, minerals.map(m =>
+        React.createElement('article', { className: 'card', key: m.id },
+          React.createElement('div', { className: 'card-head' },
+            React.createElement('img', { className: 'icon', src: m.icon, alt: m.name }),
+            React.createElement('div', null,
+              React.createElement('div', { className: 'name' }, m.name + '矿石 ', m.radiation && React.createElement('span', { className: 'badge rad' }, '辐射')),
+              React.createElement('div', { className: 'id' }, 'techmod:' + m.id + '_ore')
+            )
+          ),
+          React.createElement('div', { className: 'kv' },
+            React.createElement('span', null, '生成 Y'), React.createElement('strong', null, `${m.yMin} ~ ${m.yMax}`),
+            React.createElement('span', null, '矿脉'), React.createElement('span', null, `${m.vein} / 频率 ${m.count}`),
+            React.createElement('span', null, '工具'), React.createElement('span', { className: 'warn' }, m.tool),
+            React.createElement('span', null, '特性'), React.createElement('span', null, m.trait),
+            React.createElement('span', null, '用途'), React.createElement('span', null, m.use)
+          )
+        )
+      ));
+    }
+
+    function MineralCharts() {
+      const rangeOption = useMemo(() => ({
+        backgroundColor: 'transparent',
+        tooltip: {},
+        grid: { left: 48, right: 20, top: 28, bottom: 42 },
+        xAxis: { type: 'category', data: minerals.map(m => m.name), axisLabel: { color: '#dce6ea' } },
+        yAxis: { type: 'value', min: -64, max: 128, axisLabel: { color: '#dce6ea' }, splitLine: { lineStyle: { color: '#2d3d44' } } },
+        series: [
+          { type: 'bar', name: '最低 Y', stack: 'range', data: minerals.map(m => m.yMin), itemStyle: { color: '#33464f' } },
+          { type: 'bar', name: '生成范围', stack: 'range', data: minerals.map(m => m.yMax - m.yMin), itemStyle: { color: '#45d3c9' } }
+        ]
+      }), []);
+      const networkOption = useMemo(() => ({
+        backgroundColor: 'transparent',
+        tooltip: {},
+        series: [{
+          type: 'graph',
+          layout: 'force',
+          roam: true,
+          force: { repulsion: 180, edgeLength: 92 },
+          label: { show: true, color: '#e9eef1' },
+          lineStyle: { color: '#5a737c' },
+          data: [
+            ...minerals.map(m => ({ name: m.name + '矿', category: 0, symbolSize: 42 })),
+            { name: '粗矿', category: 1, symbolSize: 46 },
+            { name: '锭', category: 1, symbolSize: 46 },
+            { name: '铁板', category: 2, symbolSize: 38 },
+            { name: '铜线', category: 2, symbolSize: 38 },
+            { name: '机械齿轮', category: 2, symbolSize: 42 },
+            { name: '硅晶圆', category: 2, symbolSize: 42 },
+            { name: '基础电路', category: 2, symbolSize: 46 },
+            { name: '电池芯', category: 2, symbolSize: 46 },
+            { name: '核心工作台', category: 3, symbolSize: 58 },
+            { name: '机器阶段', category: 4, symbolSize: 58 },
+            { name: '反应堆', category: 5, symbolSize: 56 }
+          ],
+          links: [
+            ...minerals.map(m => ({ source: m.name + '矿', target: '粗矿' })),
+            { source: '粗矿', target: '锭' },
+            { source: '锭', target: '铁板' },
+            { source: '锭', target: '电池芯' },
+            { source: '铜线', target: '基础电路' },
+            { source: '硅晶圆', target: '基础电路' },
+            { source: '铁板', target: '机械齿轮' },
+            { source: '铁板', target: '核心工作台' },
+            { source: '铜线', target: '核心工作台' },
+            { source: '机械齿轮', target: '核心工作台' },
+            { source: '基础电路', target: '机器阶段' },
+            { source: '电池芯', target: '机器阶段' },
+            { source: '铀矿', target: '反应堆' }
+          ],
+          categories: [
+            { name: '矿石', itemStyle: { color: '#6e858d' } },
+            { name: '处理', itemStyle: { color: '#d7c65b' } },
+            { name: '零件', itemStyle: { color: '#45d3c9' } },
+            { name: '入口', itemStyle: { color: '#b88245' } },
+            { name: '机器', itemStyle: { color: '#75aadb' } },
+            { name: '高能', itemStyle: { color: '#a6e22e' } }
+          ]
+        }]
+      }), []);
+      return React.createElement('div', { className: 'layout' },
+        React.createElement('section', { className: 'panel' }, React.createElement(MineralCards)),
+        React.createElement('section', { className: 'panel' },
+          React.createElement('h2', null, '生成高度'),
+          React.createElement(EChart, { option: rangeOption, className: 'chart' }),
+          React.createElement('h2', null, '材料关系'),
+          React.createElement(EChart, { option: networkOption, className: 'network' })
+        )
+      );
+    }
+
+    function Table({ rows, headers }) {
+      return React.createElement('table', null,
+        React.createElement('thead', null, React.createElement('tr', null, headers.map(h => React.createElement('th', { key: h }, h)))),
+        React.createElement('tbody', null, rows.map((row, i) => React.createElement('tr', { key: i }, row.map((cell, j) => React.createElement('td', { key: j }, cell)))))
+      );
+    }
+
+    function App() {
+      const [tab, setTab] = useState('minerals');
+      const tabs = [
+        ['minerals', '矿物总览'],
+        ['parts', '零件/配方'],
+        ['machines', '机器建模'],
+        ['pipes', '管道规划'],
+        ['docs', '文档分区']
+      ];
+      return React.createElement(React.Fragment, null,
+        React.createElement('header', null,
+          React.createElement('h1', null, 'Core Tech 可视化设计板'),
+          React.createElement('div', { className: 'subtitle' }, 'React + ECharts 静态网页。用于展示矿物特性、生成高度、材料关系、机器建模需求和文档分区。后续新增内容必须同步更新。')
+        ),
+        React.createElement('main', null,
+          React.createElement('nav', { className: 'tabs' }, tabs.map(t => React.createElement('button', { key: t[0], className: tab === t[0] ? 'active' : '', onClick: () => setTab(t[0]) }, t[1]))),
+          tab === 'minerals' && React.createElement(MineralCharts),
+          tab === 'parts' && React.createElement('section', { className: 'panel' }, React.createElement(Table, { headers: ['零件', '配方', '当前用途', '后续用途'], rows: parts })),
+          tab === 'machines' && React.createElement('section', { className: 'panel' }, React.createElement(Table, { headers: ['机器', '作用', '必要材料', '建模需求'], rows: machines })),
+          tab === 'pipes' && React.createElement('section', { className: 'panel' },
+            React.createElement('h2', null, '管道为什么必须单独建模'),
+            React.createElement('p', { className: 'subtitle' }, '管道要根据六方向连接状态动态变化，至少需要中心节点、连接段、端口、输入输出标识、过滤器/阀门模型。普通 cube 模型无法表达连接状态。'),
+            React.createElement(Table, { headers: ['类型', '功能', '早期实现', '后续升级'], rows: [
+              ['物品管道', '搬运物品', '相邻抽取/插入', '过滤、优先级、速率升级'],
+              ['能量线缆', '传输 FE', '点对点传输', '网络传输、损耗、电压等级'],
+              ['流体管道', '搬运流体', '暂缓', '泵、阀门、储罐'],
+              ['物流节点', '网络库存', '暂缓', '自动请求、自动合成']
+            ]})
+          ),
+          tab === 'docs' && React.createElement('section', { className: 'panel' },
+            React.createElement('h2', null, '功能区文档'),
+            React.createElement('div', { className: 'grid' }, [
+              ['矿物与材料', 'systems/minerals.md'],
+              ['核心工作台', 'systems/workbench.md'],
+              ['机器系统', 'systems/machines.md'],
+              ['管道与物流', 'systems/pipes.md'],
+              ['能源系统', 'systems/energy.md'],
+              ['开发规范', 'systems/development_rules.md']
+            ].map(d => React.createElement('div', { className: 'card', key: d[1] }, React.createElement('div', { className: 'name' }, d[0]), React.createElement('a', { href: d[1] }, d[1]))))
+          )
+        )
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(App));
+  </script>
+</body>
+</html>
