@@ -1,0 +1,10 @@
+﻿{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "techmod:raw_tin"
+  },
+  "result": "techmod:tin_ingot",
+  "experience": 0.7,
+  "cookingtime": 200
+}

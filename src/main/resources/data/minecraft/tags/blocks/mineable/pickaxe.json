@@ -1,0 +1,12 @@
+﻿{
+  "replace": false,
+  "values": [
+    {"id": "techmod:core_workbench", "required": false},
+    {"id": "techmod:tin_ore", "required": false},
+    {"id": "techmod:aluminum_ore", "required": false},
+    {"id": "techmod:lead_ore", "required": false},
+    {"id": "techmod:silver_ore", "required": false},
+    {"id": "techmod:uranium_ore", "required": false}
+  ]
+}
+

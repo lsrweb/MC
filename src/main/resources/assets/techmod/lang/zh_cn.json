@@ -15,5 +15,11 @@
   "item.techmod.silver_ingot": "银锭",
   "block.techmod.uranium_ore": "铀矿石",
   "item.techmod.raw_uranium": "粗铀",
-  "item.techmod.uranium_ingot": "铀锭"
+  "item.techmod.uranium_ingot": "铀锭",
+  "item.techmod.iron_plate": "铁板",
+  "item.techmod.copper_wire": "铜线",
+  "item.techmod.machine_gear": "机械齿轮",
+  "item.techmod.basic_circuit": "基础电路",
+  "item.techmod.silicon_wafer": "硅晶圆",
+  "item.techmod.battery_cell": "电池芯"
 }

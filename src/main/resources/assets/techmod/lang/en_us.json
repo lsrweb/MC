@@ -15,5 +15,11 @@
   "item.techmod.silver_ingot": "Silver Ingot",
   "block.techmod.uranium_ore": "Uranium Ore",
   "item.techmod.raw_uranium": "Raw Uranium",
-  "item.techmod.uranium_ingot": "Uranium Ingot"
+  "item.techmod.uranium_ingot": "Uranium Ingot",
+  "item.techmod.iron_plate": "Iron Plate",
+  "item.techmod.copper_wire": "Copper Wire",
+  "item.techmod.machine_gear": "Machine Gear",
+  "item.techmod.basic_circuit": "Basic Circuit",
+  "item.techmod.silicon_wafer": "Silicon Wafer",
+  "item.techmod.battery_cell": "Battery Cell"
 }

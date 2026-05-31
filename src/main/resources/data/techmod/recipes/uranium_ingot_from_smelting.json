@@ -1,0 +1,10 @@
+﻿{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": {
+    "item": "techmod:raw_uranium"
+  },
+  "result": "techmod:uranium_ingot",
+  "experience": 0.7,
+  "cookingtime": 200
+}
