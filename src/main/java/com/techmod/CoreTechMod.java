@@ -78,6 +78,12 @@ public class CoreTechMod {
     public static final RegistryObject<Item> SILVER_INGOT = ITEMS.register("silver_ingot", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RAW_URANIUM = ITEMS.register("raw_uranium", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> URANIUM_INGOT = ITEMS.register("uranium_ingot", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> IRON_PLATE = ITEMS.register("iron_plate", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> COPPER_WIRE = ITEMS.register("copper_wire", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> MACHINE_GEAR = ITEMS.register("machine_gear", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> BASIC_CIRCUIT = ITEMS.register("basic_circuit", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> SILICON_WAFER = ITEMS.register("silicon_wafer", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> BATTERY_CELL = ITEMS.register("battery_cell", () -> new Item(new Item.Properties()));
 
     // ====== Block Entities ======
     public static final RegistryObject<BlockEntityType<CoreWorkbenchBlockEntity>> CORE_WORKBENCH_BLOCK_ENTITY =

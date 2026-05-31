@@ -1,4 +1,19 @@
 {
   "itemGroup.techmod": "Core Tech",
-  "block.techmod.core_workbench": "Core Workbench"
+  "block.techmod.core_workbench": "Core Workbench",
+  "block.techmod.tin_ore": "Tin Ore",
+  "item.techmod.raw_tin": "Raw Tin",
+  "item.techmod.tin_ingot": "Tin Ingot",
+  "block.techmod.aluminum_ore": "Aluminum Ore",
+  "item.techmod.raw_aluminum": "Raw Aluminum",
+  "item.techmod.aluminum_ingot": "Aluminum Ingot",
+  "block.techmod.lead_ore": "Lead Ore",
+  "item.techmod.raw_lead": "Raw Lead",
+  "item.techmod.lead_ingot": "Lead Ingot",
+  "block.techmod.silver_ore": "Silver Ore",
+  "item.techmod.raw_silver": "Raw Silver",
+  "item.techmod.silver_ingot": "Silver Ingot",
+  "block.techmod.uranium_ore": "Uranium Ore",
+  "item.techmod.raw_uranium": "Raw Uranium",
+  "item.techmod.uranium_ingot": "Uranium Ingot"
 }
