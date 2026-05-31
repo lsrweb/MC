@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "techmod:block/core_workbench_side",
+    "up": "techmod:block/core_workbench_top",
+    "north": "techmod:block/core_workbench_front",
+    "south": "techmod:block/core_workbench_side",
+    "west": "techmod:block/core_workbench_side",
+    "east": "techmod:block/core_workbench_side",
+    "particle": "techmod:block/core_workbench_side"
+  }
+}
