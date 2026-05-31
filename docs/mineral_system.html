@@ -1,0 +1,113 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Core Tech 矿物系统</title>
+  <style>
+    :root {
+      --bg: #111619;
+      --panel: #1b2327;
+      --panel-2: #232e33;
+      --line: #34464d;
+      --text: #e7ecef;
+      --muted: #aab7bd;
+      --cyan: #45d3c9;
+      --warn: #d6c35a;
+      --danger: #9bd51e;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    header {
+      padding: 24px 28px 18px;
+      border-bottom: 1px solid var(--line);
+      background: #182024;
+    }
+    h1 { margin: 0 0 8px; font-size: 28px; letter-spacing: 0; }
+    .sub { color: var(--muted); max-width: 980px; line-height: 1.6; }
+    main { padding: 22px 28px 42px; max-width: 1280px; margin: 0 auto; }
+    h2 { margin: 28px 0 14px; font-size: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+    .card {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 220px;
+    }
+    .card-top { display: flex; gap: 12px; align-items: center; margin-bottom: 10px; }
+    .icon {
+      width: 54px; height: 54px; image-rendering: pixelated;
+      background: #0f1517; border: 1px solid var(--line); border-radius: 6px; padding: 5px;
+    }
+    .name { font-weight: 700; font-size: 17px; }
+    .id { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .kv { display: grid; grid-template-columns: 82px 1fr; gap: 6px 10px; font-size: 13px; line-height: 1.45; }
+    .kv span:nth-child(odd) { color: var(--muted); }
+    .badge { display: inline-block; padding: 2px 7px; border: 1px solid var(--line); border-radius: 999px; background: #101719; color: var(--cyan); font-size: 12px; }
+    .warning { color: var(--warn); }
+    .radiation { color: var(--danger); }
+    table { width: 100%; border-collapse: collapse; background: var(--panel); border: 1px solid var(--line); }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px; vertical-align: top; text-align: left; font-size: 14px; }
+    th { background: var(--panel-2); color: #f5f8f9; }
+    .flow { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; }
+    .node { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 12px; min-height: 92px; }
+    .node strong { color: var(--cyan); display: block; margin-bottom: 6px; }
+    .small { color: var(--muted); font-size: 13px; line-height: 1.45; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Core Tech 矿物与材料系统</h1>
+    <div class="sub">这是模组内矿物、材料、零件和合成链的可视化说明。每次新增矿物或材料，都应该同步更新这里，避免出现“有注册、没用途、没规则”的半成品内容。</div>
+  </header>
+  <main>
+    <h2>矿物特性</h2>
+    <section class="grid" id="minerals"></section>
+
+    <h2>基础零件</h2>
+    <table>
+      <thead><tr><th>零件</th><th>配方</th><th>当前用途</th><th>后续用途</th></tr></thead>
+      <tbody id="parts"></tbody>
+    </table>
+
+    <h2>合成与发展链</h2>
+    <section class="flow">
+      <div class="node"><strong>采矿</strong><div class="small">锡、铝、铅、银、铀按不同 Y 轴生成，全部需要铁镐或更高等级。</div></div>
+      <div class="node"><strong>粗矿处理</strong><div class="small">粗矿通过熔炉或高炉得到锭，为机器零件提供材料基础。</div></div>
+      <div class="node"><strong>基础零件</strong><div class="small">铁板、铜线、齿轮、硅晶圆、电池芯、基础电路构成第一阶段工业入口。</div></div>
+      <div class="node"><strong>核心工作台</strong><div class="small">作为科技路线主入口，后续承载专属配方、机器合成和材料升级。</div></div>
+      <div class="node"><strong>机器阶段</strong><div class="small">燃煤发电机、粉碎机、电炉、储能方块、线缆网络。</div></div>
+      <div class="node"><strong>高能阶段</strong><div class="small">铀进入防护、燃料棒、反应堆和高阶能源系统。</div></div>
+    </section>
+  </main>
+  <script>
+    const minerals = [
+      { id: 'tin', name: '锡', icon: '../src/main/resources/assets/techmod/textures/block/tin_ore.png', y: '-16 ~ 96', vein: '9 / 频率 12', tool: '铁镐+', traits: '低熔点、焊料、青铜体系', uses: '早期焊料、青铜、机器外壳预留' },
+      { id: 'aluminum', name: '铝', icon: '../src/main/resources/assets/techmod/textures/block/aluminum_ore.png', y: '32 ~ 128', vein: '8 / 频率 10', tool: '铁镐+', traits: '轻质、导热、结构材料', uses: '轻型框架、散热片、机器外壳预留' },
+      { id: 'lead', name: '铅', icon: '../src/main/resources/assets/techmod/textures/block/lead_ore.png', y: '-48 ~ 32', vein: '6 / 频率 7', tool: '铁镐+', traits: '高密度、屏蔽、重金属', uses: '电池芯、辐射屏蔽、重型外壳预留' },
+      { id: 'silver', name: '银', icon: '../src/main/resources/assets/techmod/textures/block/silver_ore.png', y: '-64 ~ 16', vein: '5 / 频率 5', tool: '铁镐+', traits: '高导电性、精密接点', uses: '高级电路、高级线缆、传感器预留' },
+      { id: 'uranium', name: '铀', icon: '../src/main/resources/assets/techmod/textures/block/uranium_ore.png', y: '-64 ~ -16', vein: '4 / 频率 2 / 稀有', tool: '铁镐+', traits: '放射性、高能量密度', uses: '反应堆燃料链预留；当前持有会产生辐射负面效果', radiation: true }
+    ];
+    const parts = [
+      ['铁板', '2x2 铁锭 -> 2 铁板', '机械齿轮、核心工作台', '机器外壳、压缩机'],
+      ['铜线', '3 铜锭 -> 6 铜线', '基础电路、电池芯、核心工作台', '线缆、电机、发电机'],
+      ['机械齿轮', '铁板 + 铁锭', '核心工作台', '粉碎机、电炉、传动结构'],
+      ['硅晶圆', '2x2 下界石英 -> 2 硅晶圆', '基础电路', '芯片、电路等级升级'],
+      ['基础电路', '铜线 + 红石 + 硅晶圆', '机器控制件', '发电机、电炉、粉碎机'],
+      ['电池芯', '铅锭 + 铜线 + 红石', '早期储能部件', '电池盒、储能单元']
+    ];
+    document.getElementById('minerals').innerHTML = minerals.map(m => `
+      <article class="card">
+        <div class="card-top"><img class="icon" src="${m.icon}" alt="${m.name}矿石"><div><div class="name">${m.name}矿石 ${m.radiation ? '<span class="badge radiation">辐射</span>' : ''}</div><div class="id">techmod:${m.id}_ore</div></div></div>
+        <div class="kv"><span>生成 Y</span><strong>${m.y}</strong><span>矿脉</span><span>${m.vein}</span><span>工具</span><span class="warning">${m.tool}</span><span>现实依据</span><span>${m.traits}</span><span>用途</span><span>${m.uses}</span></div>
+      </article>`).join('');
+    document.getElementById('parts').innerHTML = parts.map(p => `<tr><td>${p[0]}</td><td>${p[1]}</td><td>${p[2]}</td><td>${p[3]}</td></tr>`).join('');
+  </script>
+</body>
+</html>

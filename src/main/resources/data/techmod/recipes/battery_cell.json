@@ -1,0 +1,11 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [" C ", "LRL", " C "],
+  "key": {
+    "C": {"item": "techmod:copper_wire"},
+    "L": {"item": "techmod:lead_ingot"},
+    "R": {"item": "minecraft:redstone"}
+  },
+  "result": {"item": "techmod:battery_cell"}
+}

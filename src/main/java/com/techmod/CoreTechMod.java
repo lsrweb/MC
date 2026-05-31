@@ -7,6 +7,7 @@ import com.techmod.block.ore.SilverOreBlock;
 import com.techmod.block.ore.TinOreBlock;
 import com.techmod.block.ore.UraniumOreBlock;
 import com.techmod.blockentity.CoreWorkbenchBlockEntity;
+import com.techmod.item.RadioactiveItem;
 import com.techmod.menu.CoreWorkbenchMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -76,8 +77,10 @@ public class CoreTechMod {
     public static final RegistryObject<Item> LEAD_INGOT = ITEMS.register("lead_ingot", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> RAW_SILVER = ITEMS.register("raw_silver", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> SILVER_INGOT = ITEMS.register("silver_ingot", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> RAW_URANIUM = ITEMS.register("raw_uranium", () -> new Item(new Item.Properties()));
-    public static final RegistryObject<Item> URANIUM_INGOT = ITEMS.register("uranium_ingot", () -> new Item(new Item.Properties()));
+    public static final RegistryObject<Item> RAW_URANIUM = ITEMS.register("raw_uranium",
+            () -> new RadioactiveItem(new Item.Properties()));
+    public static final RegistryObject<Item> URANIUM_INGOT = ITEMS.register("uranium_ingot",
+            () -> new RadioactiveItem(new Item.Properties()));
     public static final RegistryObject<Item> IRON_PLATE = ITEMS.register("iron_plate", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> COPPER_WIRE = ITEMS.register("copper_wire", () -> new Item(new Item.Properties()));
     public static final RegistryObject<Item> MACHINE_GEAR = ITEMS.register("machine_gear", () -> new Item(new Item.Properties()));

@@ -1,0 +1,7 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["CCC"],
+  "key": {"C": {"item": "minecraft:copper_ingot"}},
+  "result": {"item": "techmod:copper_wire", "count": 6}
+}

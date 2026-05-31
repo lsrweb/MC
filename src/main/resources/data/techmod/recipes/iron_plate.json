@@ -1,0 +1,7 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["HH", "HH"],
+  "key": {"H": {"item": "minecraft:iron_ingot"}},
+  "result": {"item": "techmod:iron_plate", "count": 2}
+}

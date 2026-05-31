@@ -1,0 +1,12 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["CIC", "GTG", "CIC"],
+  "key": {
+    "C": {"item": "techmod:copper_wire"},
+    "I": {"item": "techmod:iron_plate"},
+    "G": {"item": "techmod:machine_gear"},
+    "T": {"item": "minecraft:crafting_table"}
+  },
+  "result": {"item": "techmod:core_workbench"}
+}

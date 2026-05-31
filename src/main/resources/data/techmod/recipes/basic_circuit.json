@@ -1,0 +1,11 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["WWW", "RSR", "WWW"],
+  "key": {
+    "W": {"item": "techmod:copper_wire"},
+    "R": {"item": "minecraft:redstone"},
+    "S": {"item": "techmod:silicon_wafer"}
+  },
+  "result": {"item": "techmod:basic_circuit"}
+}

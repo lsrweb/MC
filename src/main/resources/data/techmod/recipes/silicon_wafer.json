@@ -1,0 +1,7 @@
+﻿{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": ["QQ", "QQ"],
+  "key": {"Q": {"item": "minecraft:quartz"}},
+  "result": {"item": "techmod:silicon_wafer", "count": 2}
+}
