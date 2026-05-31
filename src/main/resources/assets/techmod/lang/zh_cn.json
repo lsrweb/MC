@@ -1,6 +1,8 @@
 {
   "itemGroup.techmod": "核心科技",
   "block.techmod.core_workbench": "核心工作台",
+  "block.techmod.combustion_engine": "燃烧发动机",
+  "block.techmod.mechanical_gear": "机械齿轮方块",
   "block.techmod.tin_ore": "锡矿石",
   "item.techmod.raw_tin": "粗锡",
   "item.techmod.tin_ingot": "锡锭",

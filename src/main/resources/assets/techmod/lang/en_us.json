@@ -1,6 +1,8 @@
 {
   "itemGroup.techmod": "Core Tech",
   "block.techmod.core_workbench": "Core Workbench",
+  "block.techmod.combustion_engine": "Combustion Engine",
+  "block.techmod.mechanical_gear": "Mechanical Gear",
   "block.techmod.tin_ore": "Tin Ore",
   "item.techmod.raw_tin": "Raw Tin",
   "item.techmod.tin_ingot": "Tin Ingot",

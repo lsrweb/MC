@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "gear": "techmod:item/machine_gear",
+    "rim": "techmod:block/combustion_engine_port",
+    "particle": "techmod:item/machine_gear"
+  },
+  "elements": [
+    {
+      "from": [1, 1, 6],
+      "to": [15, 15, 10],
+      "faces": {
+        "north": { "texture": "#gear" },
+        "south": { "texture": "#gear" },
+        "east": { "texture": "#rim" },
+        "west": { "texture": "#rim" },
+        "up": { "texture": "#rim" },
+        "down": { "texture": "#rim" }
+      }
+    },
+    {
+      "from": [5, 5, 4],
+      "to": [11, 11, 12],
+      "faces": {
+        "north": { "texture": "#gear" },
+        "south": { "texture": "#gear" },
+        "east": { "texture": "#rim" },
+        "west": { "texture": "#rim" },
+        "up": { "texture": "#rim" },
+        "down": { "texture": "#rim" }
+      }
+    }
+  ]
+}

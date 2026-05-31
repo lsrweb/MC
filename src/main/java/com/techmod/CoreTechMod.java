@@ -1,6 +1,8 @@
 package com.techmod;
 
 import com.techmod.block.CoreWorkbenchBlock;
+import com.techmod.block.CombustionEngineBlock;
+import com.techmod.block.MechanicalGearBlock;
 import com.techmod.block.ore.AluminumOreBlock;
 import com.techmod.block.ore.LeadOreBlock;
 import com.techmod.block.ore.SilverOreBlock;
@@ -48,6 +50,10 @@ public class CoreTechMod {
     // ====== Blocks ======
     public static final RegistryObject<Block> CORE_WORKBENCH = BLOCKS.register("core_workbench",
             CoreWorkbenchBlock::new);
+    public static final RegistryObject<Block> COMBUSTION_ENGINE = BLOCKS.register("combustion_engine",
+            CombustionEngineBlock::new);
+    public static final RegistryObject<Block> MECHANICAL_GEAR = BLOCKS.register("mechanical_gear",
+            MechanicalGearBlock::new);
     public static final RegistryObject<Block> TIN_ORE = BLOCKS.register("tin_ore", TinOreBlock::new);
     public static final RegistryObject<Block> ALUMINUM_ORE = BLOCKS.register("aluminum_ore", AluminumOreBlock::new);
     public static final RegistryObject<Block> LEAD_ORE = BLOCKS.register("lead_ore", LeadOreBlock::new);
@@ -57,6 +63,10 @@ public class CoreTechMod {
     // ====== Block Items ======
     public static final RegistryObject<Item> CORE_WORKBENCH_ITEM = ITEMS.register("core_workbench",
             () -> new BlockItem(CORE_WORKBENCH.get(), new Item.Properties().stacksTo(64)));
+    public static final RegistryObject<Item> COMBUSTION_ENGINE_ITEM = ITEMS.register("combustion_engine",
+            () -> new BlockItem(COMBUSTION_ENGINE.get(), new Item.Properties().stacksTo(64)));
+    public static final RegistryObject<Item> MECHANICAL_GEAR_ITEM = ITEMS.register("mechanical_gear",
+            () -> new BlockItem(MECHANICAL_GEAR.get(), new Item.Properties().stacksTo(64)));
     public static final RegistryObject<Item> TIN_ORE_ITEM = ITEMS.register("tin_ore",
             () -> new BlockItem(TIN_ORE.get(), new Item.Properties()));
     public static final RegistryObject<Item> ALUMINUM_ORE_ITEM = ITEMS.register("aluminum_ore",

@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " I ",
+    "IGI",
+    " I "
+  ],
+  "key": {
+    "I": {
+      "item": "techmod:iron_plate"
+    },
+    "G": {
+      "item": "techmod:machine_gear"
+    }
+  },
+  "result": {
+    "item": "techmod:mechanical_gear",
+    "count": 1
+  }
+}

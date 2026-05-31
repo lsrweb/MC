@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "IPI",
+    "GFG",
+    "CIC"
+  ],
+  "key": {
+    "I": {
+      "item": "techmod:iron_plate"
+    },
+    "P": {
+      "item": "minecraft:piston"
+    },
+    "G": {
+      "item": "techmod:mechanical_gear"
+    },
+    "F": {
+      "item": "minecraft:furnace"
+    },
+    "C": {
+      "item": "techmod:copper_wire"
+    }
+  },
+  "result": {
+    "item": "techmod:combustion_engine",
+    "count": 1
+  }
+}
