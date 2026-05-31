@@ -25,6 +25,9 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            jvmArg '-Dfile.encoding=UTF-8'
+            jvmArg '-Dstdout.encoding=UTF-8'
+            jvmArg '-Dstderr.encoding=UTF-8'
             mods {
                 techmod {
                     source sourceSets.main
